@@ -59,7 +59,7 @@ def get_date():
     return datetime.datetime.now().strftime("%Y-%m-%d")
 
 def get_metric(num):
-    metric_files = ['rerun_cmp.py', 'rerun_rnk.py', 'rerun_list.py', 'manual_cmp_webshots.py']
+    metric_files = ['rerun_cmp.py', 'rerun_rnk.py', 'rerun_lst.py', 'manual_cmp_webshots.py']
     try:
         return metric_files[num]
     except:
@@ -86,4 +86,10 @@ def get_commands(metric, status, ids, db=None):
         return f'python {get_metric(metric_code)} -c {db} -i {ids}'
     return f'python {get_metric(metric_code)} -s {get_status(status)} -l {ids}'
 
+def format_couch_multi_query(ids):
     
+    id_list = ids.split(',')
+    formatted = ','.join(list(map(lambda id: f'"{id}"', id_list)))
+    array_format = f'[{formatted}]'
+
+    return array_format
